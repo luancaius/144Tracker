@@ -1,0 +1,22 @@
+PUT /144_rawData
+{
+  "settings": {
+    "index":{
+      "number_of_shards":5,
+      "number_of_replicas":2
+    }
+  }, 
+  "mappings": { 
+    "properties": {
+        "date":{
+        "type": "date"
+        },
+        "busId":{
+        "type": "integer"
+        },
+        "location":{
+        "type": "geo_point"
+        },
+    }
+  }
+}
