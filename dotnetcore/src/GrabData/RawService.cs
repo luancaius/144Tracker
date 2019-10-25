@@ -1,36 +1,36 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Refit;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace GrabData
 {
-    public class RawService : IHostedService
+    public class RawService
     {
-        private Timer _timer;
-
-        public Task StartAsync(CancellationToken cancellationToken)
+        private readonly INextBusApi _nextBusApi;
+        public RawService()
         {
-            _timer = new Timer(HelloWorld, null, 0, 5000);
-            Console.WriteLine("GrabData - Start");
-
-            return Task.CompletedTask;
+            _nextBusApi = RestService.For<INextBusApi>("http://webservices.nextbus.com/service/publicJSONFeed");
         }
-
-        void HelloWorld(object state)
+        public async Task<List<RouteBusList>> IndexRouteBusList(string agency, string route)
         {
-            Console.WriteLine($"Time - {DateTime.Now.ToLongTimeString()}");
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            //New Timer does not have a stop. 
-            _timer?.Change(Timeout.Infinite, 0);
-            Console.WriteLine("GrabData - Stop");
-            return Task.CompletedTask;
+            try
+            {
+                var busList = await _nextBusApi.GetVehicleLocations("vehicleLocations", agency, route, "0");
+                return busList;
+            }
+            catch (ValidationApiException validationException)
+            {
+                // handle validation here by using validationException.Content, 
+                // which is type of ProblemDetails according to RFC 7807
+            }
+            catch (ApiException exception)
+            {
+                // other exception handling
+            }
+            return null;
         }
     }
 }

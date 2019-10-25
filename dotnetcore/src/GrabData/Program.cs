@@ -12,10 +12,10 @@ namespace GrabData
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            Host.CreateDefaultBuilder(args)            
         .ConfigureServices(services =>
         {
-            services.AddHostedService<RawService>();
+            services.AddHostedService<ScheduleManager>();
         });
     }
 }
