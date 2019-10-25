@@ -8,7 +8,7 @@ namespace GrabData
     public class RouteBusList
     {
         [AliasAs("id")]
-        public int BusId { get; set; }
+        public string BusId { get; set; }
         [AliasAs("routeTag")]
         public string Route { get; set; }
         [AliasAs("lat")]

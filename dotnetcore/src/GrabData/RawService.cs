@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using Newtonsoft.Json;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +20,7 @@ namespace GrabData
             try
             {
                 var busList = await _nextBusApi.GetVehicleLocations("vehicleLocations", agency, route, "0");
-                return busList;
+                return busList.Vehicles;
             }
             catch (ValidationApiException validationException)
             {
