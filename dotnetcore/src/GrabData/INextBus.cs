@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using Newtonsoft.Json;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,13 +10,12 @@ namespace GrabData
     public interface INextBusApi
     {
         [Get("")]
-        Task<ApiResponse<RouteBusList>> GetVehicleLocations([AliasAs("command")] string command, [AliasAs("a")] string agency, [AliasAs("r")] string route, [AliasAs("t")] string timeInEpochMs);
+        Task<ApiResponse> GetVehicleLocations([AliasAs("command")] string command, [AliasAs("a")] string agency, [AliasAs("r")] string route, [AliasAs("t")] string timeInEpochMs);
     }
 
-    public class ApiResponse<T>
+    public class ApiResponse
     {
-        [AliasAs("vehicle")]
-        public List<T> Vehicles { get; set; }
-
+        [JsonProperty("vehicle")]        
+        public List<RouteBusList> Vehicles { get; set; }
     }
 }

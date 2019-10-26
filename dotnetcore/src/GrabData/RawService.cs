@@ -2,6 +2,7 @@
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,12 +16,12 @@ namespace GrabData
         {
             _nextBusApi = RestService.For<INextBusApi>("http://webservices.nextbus.com/service/publicJSONFeed");
         }
-        public async Task<List<RouteBusList>> IndexRouteBusList(string agency, string route)
+        public async Task<ApiResponse> IndexRouteBusList(string agency, string route)
         {
             try
             {
                 var busList = await _nextBusApi.GetVehicleLocations("vehicleLocations", agency, route, "0");
-                return busList.Vehicles;
+                return busList;
             }
             catch (ValidationApiException validationException)
             {

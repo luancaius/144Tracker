@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using Newtonsoft.Json;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,17 +8,20 @@ namespace GrabData
 {
     public class RouteBusList
     {
-        [AliasAs("id")]
+        [JsonProperty("id")]
         public string BusId { get; set; }
-        [AliasAs("routeTag")]
+        [JsonProperty("routeTag")]
         public string Route { get; set; }
-        [AliasAs("lat")]
+        [JsonProperty("lat")]
         public double Latitude { get; set; }
-        [AliasAs("lon")]
+        [JsonProperty("lon")]
         public double Longitude { get; set; }
-        [AliasAs("secsSinceReport")]
+        [JsonProperty("secsSinceReport")]
         public int SecondsSinceReport { get; set; }
-        [AliasAs("heading")]
-        public int Heading { get; set; }
+        [JsonProperty("heading")]
+        public int Heading { get; set; }        
+        public string dirTag { get; set; }
+        [JsonProperty("predictable")]
+        public bool Predictable { get; set; }
     }
 }
