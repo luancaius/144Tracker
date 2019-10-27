@@ -29,7 +29,8 @@ namespace Repository.Repositories
         {
             try
             {
-                var response = await _elasticClient.IndexDocumentAsync(vehicle, cancellationToken);
+                Console.WriteLine($"Saving {vehicle.ToString()}");
+                //var response = await _elasticClient.IndexDocumentAsync(vehicle, cancellationToken);
             }
             catch (Exception e)
             {

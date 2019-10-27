@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace GrabData
+namespace GrabData.Models
 {
     public class Vehicles
     {

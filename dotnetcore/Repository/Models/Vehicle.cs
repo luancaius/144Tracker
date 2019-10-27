@@ -11,5 +11,10 @@ namespace Repository.Models
         public DateTime Date { get; set; }
         public int Heading { get; set; }        
         public string DirTag { get; set; }
+
+        public override string ToString()
+        {
+            return $"Date:{Date} - Id:{Id} - Route:{Route} - Lat:{Latitude} - Lon:{Longitude}";
+        }
     }
 }
