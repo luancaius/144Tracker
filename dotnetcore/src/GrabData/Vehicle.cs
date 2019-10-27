@@ -6,10 +6,10 @@ using System.Text;
 
 namespace GrabData
 {
-    public class RouteBusList
+    public class Vehicle
     {
         [JsonProperty("id")]
-        public string BusId { get; set; }
+        public string VehicleId { get; set; }
         [JsonProperty("routeTag")]
         public string Route { get; set; }
         [JsonProperty("lat")]
@@ -20,7 +20,8 @@ namespace GrabData
         public int SecondsSinceReport { get; set; }
         [JsonProperty("heading")]
         public int Heading { get; set; }        
-        public string dirTag { get; set; }
+        [JsonProperty("dirTag")]
+        public string DirTag { get; set; }
         [JsonProperty("predictable")]
         public bool Predictable { get; set; }
     }
