@@ -13,7 +13,7 @@ namespace GrabData
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) => { Startup.ConfigureServices(hostContext, services); })
+                .ConfigureServices((services) => { Startup.ConfigureServices(services); })
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();

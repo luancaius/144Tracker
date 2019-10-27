@@ -1,13 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Repository.Interfaces;
+using Repository.Repositories;
 
 namespace GrabData
 {
     public class Startup
     {
-        public static ServiceProvider ConfigureServices(HostBuilderContext hostContext, IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddScoped<IRawService, RawService>();
+            services.AddScoped<IRepository<Repository.Models.Vehicle>, VehicleRepository>();
         }
     }
 }

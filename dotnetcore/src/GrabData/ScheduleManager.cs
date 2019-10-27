@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Repository.Interfaces;
 
 namespace GrabData
 {
@@ -16,17 +17,23 @@ namespace GrabData
 
         private int _second = 1000;
         private int _minute = 1000*60;
-        private RawService _rawService;
+        private IRawService _rawService;
 
         private string _route = "100";
         private string _agency = "ttc";
         private HashSet<string> _listVehicleId;
+
+        public ScheduleManager(IRawService rawService)
+        {
+            _rawService = rawService;
+        }
+        
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             _listVehicleId = new HashSet<string>();
-            _rawService = new RawService();
             _timer = new Timer(GetRouteInfo, null, 0, 5*_minute);
             _timer2 = new Timer(GetBusInfo, null, 0, 1000*_second);
+            await Task.CompletedTask;
         }
 
         async void GetRouteInfo(object state)
@@ -38,6 +45,7 @@ namespace GrabData
                 _listVehicleId.Add(vehicleId);
             }
         }
+        
         async void GetBusInfo(object state)
         {
             Console.WriteLine($"Calling GetBusList - {DateTime.Now.ToLongTimeString()}");

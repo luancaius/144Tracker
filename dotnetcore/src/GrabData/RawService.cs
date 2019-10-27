@@ -7,30 +7,34 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Repository.Interfaces;
 
 namespace GrabData
 {
-    public class RawService
+    public class RawService : IRawService
     {
         private readonly INextBusApi _nextBusApi;
-        public RawService()
+        private IRepository<Vehicle> _repository;
+        public RawService(IRepository<Vehicle> repository)
         {
             _nextBusApi = RestService.For<INextBusApi>("http://webservices.nextbus.com/service/publicJSONFeed");
+            _repository = repository;
         }
         public async Task<List<string>> IndexRouteVehicles(string agency, string route)
         {
             try
             {
                 var apiResponse = await _nextBusApi.GetRouteVehicles("vehicleLocations", agency, route, "0");
-                var vehicleIds = apiResponse.VehicleList.Select(a => a.VehicleId).ToList();
+                var vehicles = apiResponse.VehicleList.ToList();
+                var vehicleIds = vehicles.Select(a => a.VehicleId).ToList();
                 return vehicleIds;
             }
-            catch (ValidationApiException validationException)
+            catch (ValidationApiException )
             {
                 // handle validation here by using validationException.Content, 
                 // which is type of ProblemDetails according to RFC 7807
             }
-            catch (ApiException exception)
+            catch (ApiException )
             {
                 // other exception handling
             }
@@ -54,17 +58,18 @@ namespace GrabData
                 }
 
                 var listVehicles = await Task.WhenAll(tasks);
-
+                foreach (var vehicle in listVehicles)
+                {
+                    await _repository.Save(vehicle, CancellationToken.None);
+                }
+                
                 var count = listVehicles.Length;
             }
-            catch (ValidationApiException validationException)
+            catch (ValidationApiException)
             {
-                // handle validation here by using validationException.Content, 
-                // which is type of ProblemDetails according to RFC 7807
             }
-            catch (ApiException exception)
+            catch (ApiException)
             {
-                // other exception handling
             }
         }
     }
