@@ -17,7 +17,8 @@ namespace GrabData.Services
         private HashSet<string> _vehicleHashSet;
         private string _agency;
         private string _route;
-        private int _countTimer = 0;
+        private int _interval = 15;
+        private int _lastTotal;
         private Timer _timer;
         public RawService(IRepository<Repository.Models.Vehicle> repository)
         {
@@ -30,22 +31,25 @@ namespace GrabData.Services
         {
             _agency = agency;
             _route = route;
-
             Console.WriteLine($"Start Execute - {DateTime.Now}");
             await UpdateVehicleList(agency, route);
 
             if (_vehicleHashSet.Any())
             {
-                _timer = new Timer(TimerCallBack, null, 0, 15 * 1000);
+
+                if (_timer != null)
+                    await _timer.DisposeAsync();
+                _timer = new Timer(TimerCallBack, null, 0, _interval * 1000);
+            }
+            else
+            {
+                Console.WriteLine($"{DateTime.Now} - No buses for route {_route}");
             }
         }
 
         private async void TimerCallBack(object state)
         {
-            _countTimer+=15;
             await UpdateVehicle(_agency, _route);
-            if (_countTimer > (5 * 60 - 10))
-                await _timer.DisposeAsync();
         }
 
         private async Task UpdateVehicle(string agency, string route)
@@ -69,6 +73,14 @@ namespace GrabData.Services
             var list = await GetVehicles(agency, route);
             if (list == null)
                 _vehicleHashSet.Clear();
+            else
+            {
+                if (_lastTotal != _vehicleHashSet.Count)
+                {
+                    Console.WriteLine($"-------------- From {_lastTotal} to {_vehicleHashSet.Count} -------------");
+                    _lastTotal = _vehicleHashSet.Count;
+                }
+            }
             foreach (var item in list)
             {
                 _vehicleHashSet.Add(item);
@@ -82,13 +94,14 @@ namespace GrabData.Services
             {
                 Console.WriteLine($"Start GetVehicles");
                 var apiResponse = await _nextBusApi.GetRouteVehicles("vehicleLocations", agency, route, "0");
-                var vehicles = apiResponse.VehicleList.ToList();
-                var vehicleIds = vehicles.Select(a => a.VehicleId).ToList();
+                var vehicles = apiResponse.VehicleList;
+                var vehicleIds = vehicles==null? new List<string>() : vehicles.Select(a => a.VehicleId).ToList();
                 Console.WriteLine($"End GetVehicles: {vehicleIds.Count} vehicles");
                 return vehicleIds;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine($"Exception GetVehicles: {e.Message}");
             }
             return null;
         }
@@ -100,11 +113,9 @@ namespace GrabData.Services
                 var vehicleResponse = await _nextBusApi.GetRouteVehicle("vehicleLocation", agency, route, "0", vehicleId);
                 return vehicleResponse.Vehicle;
             }
-            catch (ValidationApiException)
+            catch (Exception e)
             {
-            }
-            catch (ApiException)
-            {
+                Console.WriteLine($"Exception GetVehicles: {e.Message}");
             }
             return null;
         }

@@ -13,7 +13,6 @@ namespace GrabData
         private int _minute = 1000*60;
         private IRawService _rawService;
 
-        private string _route = "100";
         private string _agency = "ttc";
 
         public HostManager(IRawService rawService)
@@ -30,8 +29,9 @@ namespace GrabData
         void GetRouteInfo(object state)
         {
             Console.WriteLine($"Calling Execute - {DateTime.Now.ToLongTimeString()}");
-            _rawService.Execute(_agency, _route);
-        }      
+            _rawService.Execute(_agency, "144");
+            _rawService.Execute(_agency, "100");
+        }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {

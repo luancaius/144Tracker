@@ -12,7 +12,7 @@ namespace Repository.Repositories
         private IElasticClient _elasticClient;
         public VehicleRepository()
         {
-            var settings = new ConnectionSettings(new Uri("http://localhost:9200")).DefaultIndex("Vehicles");
+            var settings = new ConnectionSettings(new Uri("http://localhost:9200")).DefaultIndex("vehicles");
             _elasticClient = new ElasticClient(settings);
         }
         
@@ -30,7 +30,7 @@ namespace Repository.Repositories
             try
             {
                 Console.WriteLine($"Saving {vehicle.ToString()}");
-                //var response = await _elasticClient.IndexDocumentAsync(vehicle, cancellationToken);
+                var response = await _elasticClient.IndexDocumentAsync(vehicle, cancellationToken);
             }
             catch (Exception e)
             {

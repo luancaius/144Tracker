@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Nest;
+using Newtonsoft.Json;
 using Refit;
 using System;
 using System.Collections.Generic;
@@ -28,9 +29,8 @@ namespace GrabData.Models
         public static Repository.Models.Vehicle ConvertFrom(Vehicle vehicle)
         {
             var vehicleDTO = new Repository.Models.Vehicle();
-            vehicleDTO.Id = vehicle.VehicleId;
-            vehicleDTO.Latitude = vehicle.Latitude;
-            vehicleDTO.Longitude = vehicle.Longitude;
+            vehicleDTO.VehicleId = vehicle.VehicleId;
+            vehicleDTO.Location = new GeoLocation(vehicle.Latitude, vehicle.Longitude);
             vehicleDTO.Route = vehicle.Route;
             vehicleDTO.Heading = vehicle.Heading;
             vehicleDTO.DirTag = vehicle.DirTag;

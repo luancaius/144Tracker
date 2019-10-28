@@ -1,0 +1,31 @@
+﻿PUT /vehicles
+{
+  "settings": {
+    "index":{
+      "number_of_shards":5,
+      "number_of_replicas":2
+    }
+  }, 
+  "mappings": { 
+  "properties": {
+	"id":{
+      "type": "integer"
+    },
+    "route":{
+      "type": "text"
+    },
+    "location":{
+      "type": "geo_point"
+    },
+    "date":{
+      "type": "date"
+    },
+    "heading":{
+      "type": "integer"
+    },
+    "dirTag":{
+      "type": "text"
+    }
+  }
+  }
+}
