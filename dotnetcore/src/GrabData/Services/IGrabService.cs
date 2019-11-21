@@ -8,6 +8,6 @@ namespace GrabData.Services
     public interface IGrabService
     {
         Task GetVehicles(string agency, string route);
-        Task GetVehicle();
+        Task GetVehicle(string agency);
     }
 }

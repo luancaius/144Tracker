@@ -27,7 +27,7 @@ namespace GrabData
         {
             Console.WriteLine("GrabData - Start");
             _timer = new Timer(GetVehicleList, null, 0, 5*_minute);
-            _timer2 = new Timer(GetVehicleList, null, 0, 5 * _minute);
+            _timer2 = new Timer(GetVehicle, null, 0, 20);
             await Task.CompletedTask;
         }
 
@@ -50,7 +50,7 @@ namespace GrabData
             {
                 foreach (var route in _agencies[agency])
                 {
-                    _grabService.GetVehicle();
+                    _grabService.GetVehicle(agency);
                 }
             }
         }

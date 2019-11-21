@@ -1,6 +1,10 @@
-﻿using System;
+﻿using GrabData.Models;
+using Repository.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GrabData.Services
@@ -8,27 +12,40 @@ namespace GrabData.Services
     public class GrabService : IGrabService
     {
         private IRawService _rawService;
-        private Dictionary<string, List<string>> _routeVehicles;
-        public GrabService(IRawService rawService)
+        private IRepository<Repository.Models.Vehicle> _repository;
+        private Dictionary<string, List<Vehicle>> _routeVehicles;
+       
+        public GrabService(IRawService rawService, IRepository<Repository.Models.Vehicle> repository)
         {
             _rawService = rawService;
-            _routeVehicles = new Dictionary<string, List<string>>();
+            _repository = repository;
+            _routeVehicles = new Dictionary<string, List<Vehicle>>();
         }
 
         public async Task GetVehicles(string agency, string route)
         {
-            await Task.Delay(0);
+            var vehicles = await _rawService.GetVehicles(agency, route);
+            _routeVehicles[route] = vehicles;
         }
 
-        public async Task GetVehicle()
+        public async Task GetVehicle(string agency)
         {
-            await Task.Delay(0);
-            // get list
+            var routes = _routeVehicles.Keys.ToList();
+            foreach(var route in routes)
+            {
+                var listVehicles = _routeVehicles[route];
+                foreach(var vehicle in listVehicles)
+                {
+                    var vehicleInfo = await _rawService.GetVehicle(agency, route, vehicle.VehicleId);
+                    await SaveAsync(vehicleInfo);
+                }
+            }            
+        }
 
-            // save new objects from list 
-            // delete old ones and log that
-            // for each item get
-
+        private async Task SaveAsync(Vehicle vehicle)
+        {
+            var vehicleDTO = Vehicle.ConvertFrom(vehicle);
+            await _repository.Save(vehicleDTO, CancellationToken.None);
         }
     }
 }
