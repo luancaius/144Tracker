@@ -12,14 +12,15 @@ namespace GrabData
         private Timer _timer;
         private Timer _timer2;
 
-        private const int _minute = 1000*60;        
+        private const int _minute = 1000*60;
+        private const int _second = 1000;
         private IGrabService _grabService;
 
         private Dictionary<string, List<String>> _agencies;
 
         public ScheduleManager(IGrabService grabService)
         {
-            _agencies = new Dictionary<string, List<string>>{ { "ttc", new List<string> { "100" } } };
+            _agencies = new Dictionary<string, List<string>>{ { "ttc", new List<string> { "144" } } };
             _grabService = grabService;
         }
         
@@ -27,7 +28,7 @@ namespace GrabData
         {
             Console.WriteLine("GrabData - Start");
             _timer = new Timer(GetVehicleList, null, 0, 5*_minute);
-            _timer2 = new Timer(GetVehicle, null, 0, 20);
+            _timer2 = new Timer(GetVehicle, null, 0, 20*_second);
             await Task.CompletedTask;
         }
 

@@ -25,6 +25,12 @@ namespace GrabData.Services
         public async Task GetVehicles(string agency, string route)
         {
             var vehicles = await _rawService.GetVehicles(agency, route);
+            var firstNotSecond = _routeVehicles[route].Except(vehicles).ToList();
+            var secondNotFirst = vehicles.Except(_routeVehicles[route]).ToList();
+            if(!firstNotSecond.Any() && !secondNotFirst.Any())
+            {
+                Console.WriteLine("----------Changing list!!!");
+            }
             _routeVehicles[route] = vehicles;
         }
 
