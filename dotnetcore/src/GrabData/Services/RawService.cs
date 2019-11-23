@@ -22,10 +22,10 @@ namespace GrabData.Services
         {
             try
             {
-                Console.WriteLine($"Start GetVehicles");
+                Console.WriteLine($"Start GetVehicles {agency} {route}");
                 var apiResponse = await _nextBusApi.GetRouteVehicles("vehicleLocations", agency, route, "0");
                 var vehicles = apiResponse.VehicleList;
-                Console.WriteLine($"End GetVehicles: {vehicles.Count} vehicles");
+                Console.WriteLine($"End GetVehicles {agency} {route}: {(vehicles == null ? 0 : vehicles.Count)} vehicles");
                 return vehicles;
             }
             catch (Exception e)
@@ -39,6 +39,7 @@ namespace GrabData.Services
         {
             try
             {
+                Console.WriteLine($"Start GetVehicle {agency} {route} {vehicleId}");
                 var vehicleResponse = await _nextBusApi.GetRouteVehicle("vehicleLocation", agency, route, "0", vehicleId);
                 return vehicleResponse.Vehicle;
             }

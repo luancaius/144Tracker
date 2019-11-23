@@ -12,15 +12,15 @@ namespace GrabData
         private Timer _timer;
         private Timer _timer2;
 
-        private const int _minute = 1000*60;
         private const int _second = 1000;
+        private const int _minute = _second*60;
         private IGrabService _grabService;
 
         private Dictionary<string, List<String>> _agencies;
 
         public ScheduleManager(IGrabService grabService)
         {
-            _agencies = new Dictionary<string, List<string>>{ { "ttc", new List<string> { "144" } } };
+            _agencies = new Dictionary<string, List<string>>{ { "ttc", new List<string> { "100", "144" } } };
             _grabService = grabService;
         }
         
@@ -58,7 +58,8 @@ namespace GrabData
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _timer?.Change(Timeout.Infinite, 0);
+            _timer?.Change(Timeout.Infinite, Timeout.Infinite);
+            _timer2?.Change(Timeout.Infinite, Timeout.Infinite);
 
             Console.WriteLine("GrabData - Stop");
             return Task.CompletedTask;
@@ -67,6 +68,7 @@ namespace GrabData
         public void Dispose()
         {
             _timer.Dispose();
+            _timer2.Dispose();
         }
     }
 }
