@@ -12,7 +12,7 @@ namespace GrabData
         {
             services.AddScoped<IGrabService, GrabService>();
             services.AddScoped<IRawService, RawService>();
-            services.AddScoped<IRepository<Repository.Models.Vehicle>, VehicleRepository>();
+            services.AddScoped<IRepository<Repository.Models.Vehicle>, VehicleRepository>();            
 
             services.AddHostedService<ScheduleManager>();
         }

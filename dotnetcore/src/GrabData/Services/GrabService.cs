@@ -13,42 +13,70 @@ namespace GrabData.Services
     {
         private IRawService _rawService;
         private IRepository<Repository.Models.Vehicle> _repository;
-        private Dictionary<string, List<Vehicle>> _routeVehicles;
-       
+        private List<string> _vehiclesIds;
+
         public GrabService(IRawService rawService, IRepository<Repository.Models.Vehicle> repository)
         {
+            Console.WriteLine("Inside GrabService");
             _rawService = rawService;
             _repository = repository;
-            _routeVehicles = new Dictionary<string, List<Vehicle>>();
+            _vehiclesIds = new List<string>();
         }
 
         public async Task GetVehicles(string agency, string route)
         {
+            Console.WriteLine($"GetVehicles - Total list {_vehiclesIds.Count}");
             var vehicles = await _rawService.GetVehicles(agency, route);
             if (vehicles != null)
-            {                
-                _routeVehicles[route] = vehicles;
-            }                        
+            {
+                var vehiclesIds = vehicles.Select(a => a.VehicleId).ToList();
+                ExtractFinalList(vehiclesIds, _vehiclesIds);
+                _vehiclesIds = vehiclesIds;
+            }
         }
 
-        public async Task GetVehicle(string agency)
+        public async Task GetVehicle(string agency, string route)
         {
-            var routes = _routeVehicles.Keys.ToList();
-            foreach(var route in routes)
+            //Console.WriteLine($"GetVehicle - Total list {_vehiclesIds.Count}");
+
+            foreach (var vehicleId in _vehiclesIds)
             {
-                var listVehicles = _routeVehicles[route];
-                foreach(var vehicle in listVehicles)
+                var vehicleInfo = await _rawService.GetVehicle(agency, route, vehicleId);
+                if (vehicleInfo != null)
                 {
-                    var vehicleInfo = await _rawService.GetVehicle(agency, route, vehicle.VehicleId);
+                    Console.WriteLine($"Saving info for {vehicleInfo.VehicleId}");
                     await SaveAsync(vehicleInfo);
                 }
-            }            
+            }
+
         }
 
         private async Task SaveAsync(Vehicle vehicle)
         {
             var vehicleDTO = Vehicle.ConvertFrom(vehicle);
             await _repository.Save(vehicleDTO, CancellationToken.None);
+        }
+
+        private void ExtractFinalList(List<string> newList, List<string> oldList)
+        {
+            var listAdd = newList.Except(oldList).ToList();
+            var listDelete = oldList.Except(newList).ToList();
+            if (!listAdd.Any() && !listDelete.Any())
+                Console.WriteLine("#####NO Change###");
+            PrintList("##### +++++ list add", listAdd);
+            PrintList("##### ----- list delete", listDelete);            
+        }
+
+        private void PrintList(string title, List<string> list)
+        {
+            if (!list.Any())
+                return;
+            Console.Write(title + "\t");
+            foreach(var item in list)
+            {
+                Console.Write(item + "\t");
+            }
+            Console.WriteLine();
         }
     }
 }

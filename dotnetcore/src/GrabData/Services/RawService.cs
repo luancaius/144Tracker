@@ -25,6 +25,7 @@ namespace GrabData.Services
                 Console.WriteLine($"Start GetVehicles {agency} {route}");
                 var apiResponse = await _nextBusApi.GetRouteVehicles("vehicleLocations", agency, route, "0");
                 var vehicles = apiResponse.VehicleList;
+                PrintVehicles(vehicles);
                 Console.WriteLine($"End GetVehicles {agency} {route}: {(vehicles == null ? 0 : vehicles.Count)} vehicles");
                 return vehicles;
             }
@@ -48,6 +49,17 @@ namespace GrabData.Services
                 Console.WriteLine($"Exception GetVehicles: {e.Message}");
             }
             return null;
+        }
+
+        private void PrintVehicles(List<Vehicle> vehicles)
+        {
+            if (vehicles != null)
+            {
+                foreach(var vehicle in vehicles)
+                {
+                    Console.WriteLine($"VehicleId: {vehicle.VehicleId}");
+                }
+            }
         }
     }
 }
