@@ -38,23 +38,23 @@ namespace GrabData.Services
         public async Task GetVehicle(string agency, string route)
         {
             //Console.WriteLine($"GetVehicle - Total list {_vehiclesIds.Count}");
-
-            foreach (var vehicleId in _vehiclesIds)
+            var listTask = new List<Task>();
+            foreach(var vehicleId in _vehiclesIds)
             {
-                var vehicleInfo = await _rawService.GetVehicle(agency, route, vehicleId);
-                if (vehicleInfo != null)
-                {
-                    Console.WriteLine($"Saving info for {vehicleInfo.VehicleId}");
-                    await SaveAsync(vehicleInfo);
-                }
+                listTask.Add(SaveAsync(agency, route, vehicleId));
             }
-
+            Task.WaitAll(listTask.ToArray());            
         }
 
-        private async Task SaveAsync(Vehicle vehicle)
+        private async Task SaveAsync(string agency, string route, string vehicleId)
         {
-            var vehicleDTO = Vehicle.ConvertFrom(vehicle);
-            await _repository.Save(vehicleDTO, CancellationToken.None);
+            var vehicleInfo = await _rawService.GetVehicle(agency, route, vehicleId);
+            if (vehicleInfo != null)
+            {
+                Console.WriteLine($"Saving info for {vehicleInfo.VehicleId}");
+                var vehicleDTO = Vehicle.ConvertFrom(vehicleInfo);
+                await _repository.Save(vehicleDTO, CancellationToken.None);
+            }
         }
 
         private void ExtractFinalList(List<string> newList, List<string> oldList)
