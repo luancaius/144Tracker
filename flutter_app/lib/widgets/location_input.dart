@@ -4,7 +4,6 @@ import 'package:flutter_app/screens/map_screen.dart';
 import 'package:location/location.dart';
 
 class LocationInput extends StatefulWidget {
-
   List<LocationModel> locations;
   LocationInput(this.locations);
   @override
@@ -13,11 +12,12 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   Future<void> _selectOnMap() async {
-    if(widget.locations != null){
-    final location = await Location().getLocation();
-    widget.locations.add(new LocationModel(name: "ME",lat: location.latitude, lon: location.longitude));
-    await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => MapScreen(widget.locations)));
+    if (widget.locations != null) {
+      final location = await Location().getLocation();
+      widget.locations.add(new LocationModel(
+          name: "ME", lat: location.latitude, lon: location.longitude));
+      await Navigator.of(context).push(
+          MaterialPageRoute(builder: (ctx) => MapScreen(widget.locations)));
     }
   }
 

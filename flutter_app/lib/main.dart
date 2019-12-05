@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'models/vehicleLocation.dart';
 import 'widgets/location_input.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -18,11 +17,13 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   String _route;
+  int _totalVehicles;
   List<LocationModel> _locations;
   @override
   void initState() {
     super.initState();
     _route = _route ?? '100';
+    _totalVehicles = 0;
   }
 
   getVehicles() {
@@ -33,20 +34,26 @@ class MyAppState extends State<MyApp> {
             agency +
             '&r=' +
             route +
-            '&t=0';
-    print("Fazendo get");
+            '&t=1575543600';
     http.get(url).then((response) {
       var result = json.decode(response.body);
-      var arrayVehicles = result['vehicle'] as List<dynamic>;
-      if(arrayVehicles == null)
+      var rawVehicles = result['vehicle'];
+      var arrayVehicles = rawVehicles as List<dynamic>;
+      if (arrayVehicles == null) {
+        print("getVehicles - no vehicles");
         return;
+      }
       var vehicleLocations = arrayVehicles.map((item) {
         return VehicleLocation.fromJson(item);
       }).toList();
-      var locations = vehicleLocations.map((item) {return LocationModel.convert(item);}).toList();
+      var locations = vehicleLocations.map((item) {
+        return LocationModel.convert(item);
+      }).toList();
       setState(() {
         _locations = locations;
+        _totalVehicles = locations.length;
       });
+      print("getVehicles - total=" + _totalVehicles.toString());
     });
   }
 
@@ -63,7 +70,7 @@ class MyAppState extends State<MyApp> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                     border: InputBorder.none, hintText: 'Enter the route'),
-                    initialValue: _route,
+                initialValue: _route,
                 onChanged: (value) {
                   setState(() {
                     _route = value;
@@ -76,7 +83,9 @@ class MyAppState extends State<MyApp> {
                   getVehicles();
                 },
               ),
-              LocationInput(_locations)
+              _totalVehicles > 0
+                  ? LocationInput(_locations)
+                  : Text("No buses available")
             ],
           )),
     );
