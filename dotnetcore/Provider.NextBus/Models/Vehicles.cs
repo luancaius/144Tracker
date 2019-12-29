@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace GrabData.Models
+namespace Provider.NextBus.Models
 {
     public class Vehicles
     {

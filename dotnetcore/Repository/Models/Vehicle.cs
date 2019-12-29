@@ -9,12 +9,20 @@ namespace Repository.Models
         public string Route { get; set; }
         public GeoLocation Location { get; set; }
         public DateTime Date { get; set; }
-        public int Heading { get; set; }        
-        public string DirTag { get; set; }
 
         public override string ToString()
         {
             return $"Date:{Date} - VehicleId:{VehicleId} - Route:{Route} - Lat:{Location.Latitude} - Lon:{Location.Longitude}";
+        }
+        
+        public static Repository.Models.Vehicle ConvertFrom(DomainModel.Vehicle vehicle)
+        {
+            var vehicleDTO = new Repository.Models.Vehicle();
+            vehicleDTO.VehicleId = vehicle.Id;
+            vehicleDTO.Location = new GeoLocation(vehicle.Lat, vehicle.Lon);
+            vehicleDTO.Route = vehicle.Route;
+            vehicleDTO.Date = DateTime.Now;
+            return vehicleDTO;
         }
     }
 }

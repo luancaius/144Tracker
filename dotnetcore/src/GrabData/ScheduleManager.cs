@@ -2,8 +2,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using GrabData.Services;
-using System.Collections.Generic;
+using Interfaces;
 
 namespace GrabData
 {
@@ -44,7 +43,7 @@ namespace GrabData
         {
             //Console.WriteLine($"----Calling Timer GetVehicle - {DateTime.Now.ToLongTimeString()}");
 
-            _grabService.GetVehicle(_agency, _route);
+            //_grabService.GetVehicle(_agency, _route);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

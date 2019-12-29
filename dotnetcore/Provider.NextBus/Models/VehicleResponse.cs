@@ -1,6 +1,6 @@
 ﻿using Refit;
 
-namespace GrabData.Models
+namespace Provider.NextBus.Models
 {
     public class VehicleResponse
     {
