@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Provider.NextBus;
+using Service;
 
 namespace WebAPI
 {
@@ -19,6 +21,9 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IService, Service.Service>();
+            services.AddScoped<IRawService, RawService>();
+
             services.AddControllers();
             
             // Register the Swagger generator, defining 1 or more Swagger documents

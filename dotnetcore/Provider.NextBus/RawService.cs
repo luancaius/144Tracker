@@ -42,7 +42,7 @@ namespace Provider.NextBus
         {
             try
             {
-                var busStops = await _nextBusApi.GetBusStops("vehicleLocation", agency, route);
+                var busStops = await _nextBusApi.GetBusStops("routeConfig", agency, route);
                 return busStops;
             }
             catch (Exception e)
