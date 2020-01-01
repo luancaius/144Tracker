@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Provider.NextBus.Models;
 using Refit;
 
@@ -40,15 +41,9 @@ namespace Provider.NextBus
 
         public async Task<BusStopSet> GetBusStops(string agency, string route)
         {
-            try
-            {
-                var busStops = await _nextBusApi.GetBusStops("routeConfig", agency, route);
-                return busStops;
-            }
-            catch (Exception e)
-            {
-            }
-            return null;  
+            var stringResponse = await _nextBusApi.GetBusStops("routeConfig", agency, route);
+            var busStopResponse = JsonConvert.DeserializeObject<BusStopResponse>(stringResponse);
+            return busStopResponse.BusStopSet;
         }
 
         public async Task<Vehicle> GetVehicle(string agency, string route, string vehicleId)

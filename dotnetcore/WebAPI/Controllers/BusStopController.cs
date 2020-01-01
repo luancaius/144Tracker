@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using WebAPI.Model;
@@ -15,9 +17,9 @@ namespace WebAPI.Controllers
             _service = service;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<BusStop>> Get(string agency, string route, double? latitude, double? longitude)
+        public async Task<ActionResult<List<BusStop>>> Get(string agency, string route, double? latitude, double? longitude)
         {
-            var busStops = _service.GetBusStopList(agency, route);
+            var busStops = await _service.GetBusStopList(agency, route);
             return Ok(busStops);
         }
         

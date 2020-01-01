@@ -7,7 +7,7 @@ namespace Provider.NextBus
     public interface INextBusApi
     {
         [Get("")]
-        Task<BusStopSet> GetBusStops([AliasAs("command")] string command, [AliasAs("a")] string agency, [AliasAs("r")] string route);
+        Task<string> GetBusStops([AliasAs("command")] string command, [AliasAs("a")] string agency, [AliasAs("r")] string route);
         [Get("")]
         Task<Vehicles> GetRouteVehicles([AliasAs("command")] string command, [AliasAs("a")] string agency, 
             [AliasAs("r")] string route, [AliasAs("t")] string timeInEpochMs);
