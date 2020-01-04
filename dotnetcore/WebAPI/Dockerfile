@@ -1,4 +1,4 @@
-﻿FROM microsoft/aspnetcore-build:2.0 AS build-env
+﻿FROM microsoft/aspnetcore-build:3.0 AS build-env
 WORKDIR /app
 
 COPY *.csproj ./
