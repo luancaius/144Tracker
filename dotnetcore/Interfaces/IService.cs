@@ -6,6 +6,6 @@ namespace Service
 {
     public interface IService
     {
-        Task<List<BusStop>> GetBusStopList(string agency, string route);
+        Task<List<BusStop>> GetBusStopList(string agency, string route, double? lat, double? lon);
     }
 }

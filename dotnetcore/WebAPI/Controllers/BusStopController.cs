@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BusStop>>> Get(string agency, string route, double? latitude, double? longitude)
         {
-            var busStops = await _service.GetBusStopList(agency, route);
+            var busStops = await _service.GetBusStopList(agency, route, latitude, longitude);
             return Ok(busStops);
         }
         
