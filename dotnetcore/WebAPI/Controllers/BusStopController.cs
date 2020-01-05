@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using WebAPI.Mapper;
 using WebAPI.Model;
 
 namespace WebAPI.Controllers
@@ -19,7 +20,8 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BusStop>>> Get(string agency, string route, double? latitude, double? longitude)
         {
-            var busStops = await _service.GetBusStopList(agency, route, latitude, longitude);
+            var busStopsDomain = await _service.GetBusStopList(agency, route, latitude, longitude);
+            var busStops = busStopsDomain.Select(Mapping.ConvertFromDomain).ToList();
             return Ok(busStops);
         }
         
