@@ -19,7 +19,7 @@ namespace Repository.Models
         {
             var vehicleDTO = new Repository.Models.Vehicle();
             vehicleDTO.VehicleId = vehicle.Id;
-            vehicleDTO.Location = new GeoLocation(vehicle.Lat, vehicle.Lon);
+            vehicleDTO.Location = new GeoLocation(vehicle.Latitude, vehicle.Longitude);
             vehicleDTO.Route = vehicle.Route;
             vehicleDTO.Date = DateTime.Now;
             return vehicleDTO;

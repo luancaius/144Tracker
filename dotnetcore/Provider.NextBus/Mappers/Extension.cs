@@ -16,5 +16,15 @@ namespace Provider.NextBus.Mappers
             var domain = new DomainModel.BusStop(source.Id, source.Title, source.Latitude, source.Longitude, source.Tag, distance);
             return domain;
         }
+        
+        public static DomainModel.Vehicle ConvertToDomain(this Vehicle vehicle, double lat, double lon)
+        {
+            var origin = new GeoCoordinate(lat, lon);
+            var destin = new GeoCoordinate(vehicle.Latitude, vehicle.Longitude);
+            var distance = origin.GetDistanceTo(destin);
+            
+            var vehicleDomain = new DomainModel.Vehicle(vehicle.Id, vehicle.Route, vehicle.Latitude, vehicle.Longitude, vehicle.SecondsSinceReport, distance);
+            return vehicleDomain;
+        }
     }
 }

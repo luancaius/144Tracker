@@ -4,8 +4,8 @@
     {
         public string Id { get; }
         public string Title { get; }
-        public double Lat { get; }
-        public double Lon { get; }
+        public double Latitude { get; }
+        public double Longitude { get; }
         public string  Tag { get; }
         public double Distance { get; }
 
@@ -13,8 +13,8 @@
         {
             Id = id;
             Title = title;
-            Lat = lat;
-            Lon = lon;
+            Latitude = lat;
+            Longitude = lon;
             Tag = tag;
             Distance = distance;
         }
