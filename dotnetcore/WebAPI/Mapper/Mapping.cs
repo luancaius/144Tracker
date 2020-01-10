@@ -11,7 +11,7 @@ namespace WebAPI.Mapper
             destin.Title = source.Title;
             destin.Latitude = source.Latitude;
             destin.Longitude = source.Longitude;
-            destin.Distance = source.Distance.ToString("N2");
+            destin.Distance = source.Distance.ToString("N0");
             return destin;
         }
 
@@ -23,7 +23,7 @@ namespace WebAPI.Mapper
             destin.Latitude = source.Latitude;
             destin.Longitude = source.Longitude;
             destin.SecondsSinceReport = source.SecondsSinceReport;
-            destin.Distance = source.DistanceFromBusStop.ToString("N2");
+            destin.Distance = source.DistanceFromBusStop.ToString("N0");
             destin.CreatedOn = DateTime.Now;
             return destin;
         }
