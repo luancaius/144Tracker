@@ -25,11 +25,15 @@ namespace Service
             var vehicles = await _rawService.GetVehicles(agency, route);
             return vehicles?.Select(a => a.ConvertToDomain(lat, lon)).OrderBy(a => a.DistanceFromBusStop).Take(5).ToList();
         }
-        
-        public async Task<List<BusStop>> GetPredictionList(string agency, string route, double? lat, double? lon)
+
+        public Task<List<Prediction>> GetPredictions(string agency, string route, string vehicleId)
         {
-            var busStopSet = await _rawService.GetBusStops(agency, route);
-            return busStopSet?.BusStops.Select(a => a.ConvertToDomain(lat, lon)).OrderBy(a => a.Distance).Take(5).ToList();
+            throw new System.NotImplementedException();
+        }
+
+        public Task<BusSchedule> GetBusSchedule(string agency, string route, string busStopId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
