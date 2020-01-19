@@ -9,6 +9,6 @@ namespace Service
         Task<List<BusStop>> GetBusStopList(string agency, string route, double? lat, double? lon);
         Task<List<Vehicle>> GetVehicleList(string agency, string route, double lat, double lon);
         Task<List<Prediction>> GetPredictions(string agency, string route, string vehicleId);
-        Task<BusSchedule> GetBusSchedule(string agency, string route, string busStopId);
+        Task<BusScheduleDay> GetBusSchedule(string agency, string route, string busStopId);
     }
 }

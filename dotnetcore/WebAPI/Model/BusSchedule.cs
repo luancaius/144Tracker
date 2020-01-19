@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DomainModel
+namespace WebAPI.Model
 {
-    public class BusScheduleDay
+    public class BusSchedule
     {
         public string BusStopId { get; }
         public string Route { get; }

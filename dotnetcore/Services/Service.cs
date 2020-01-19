@@ -31,9 +31,10 @@ namespace Service
             throw new System.NotImplementedException();
         }
 
-        public Task<BusSchedule> GetBusSchedule(string agency, string route, string busStopId)
+        public async Task<BusScheduleDay> GetBusSchedule(string agency, string route, string busStopId)
         {
-            throw new System.NotImplementedException();
+            var vehicles = await _rawService.GetScheduleDay(agency, route);
+            return new BusScheduleDay();
         }
     }
 }

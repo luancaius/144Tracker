@@ -14,5 +14,7 @@ namespace Provider.NextBus
         [Get("")]
         Task<VehicleResponse> GetRouteVehicle([AliasAs("command")] string command, [AliasAs("a")] string agency, 
             [AliasAs("r")] string route, [AliasAs("t")] string timeInEpochMs, [AliasAs("v")] string vehicleId);
+        [Get("")]
+        Task<BusScheduleResponse> GetBusSchedule([AliasAs("command")] string command, [AliasAs("a")] string agency, [AliasAs("r")] string route);
     }
 }
