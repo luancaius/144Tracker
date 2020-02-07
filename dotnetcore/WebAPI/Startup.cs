@@ -45,10 +45,7 @@ namespace WebAPI
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
             }
-
-            app.UseHttpsRedirection();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
