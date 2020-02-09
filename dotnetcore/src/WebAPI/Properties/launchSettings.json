@@ -1,5 +1,5 @@
 {
-  "profiles": 
+  "profiles": {
     "WebAPI": {
       "commandName": "Project",
       "environmentVariables": {
