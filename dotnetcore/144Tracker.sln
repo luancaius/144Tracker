@@ -5,17 +5,17 @@ VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrabData", "src\GrabData\GrabData.csproj", "{EBA55E8E-660B-4765-B3A1-4483D157AFFB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{C4AF1ABC-65D2-49AB-969B-CF1B4668BF97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "src\Repository\Repository.csproj", "{C4AF1ABC-65D2-49AB-969B-CF1B4668BF97}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{BBED33DA-3C1E-4A58-A56E-9AFFD608F2DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "src\WebAPI\WebAPI.csproj", "{BBED33DA-3C1E-4A58-A56E-9AFFD608F2DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{18CF695E-CC50-4199-A4F0-F0C9B2E5E007}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "src\Services\Services.csproj", "{18CF695E-CC50-4199-A4F0-F0C9B2E5E007}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{89FE8B70-82A0-4D6A-8DB9-76AD877940DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "src\Interfaces\Interfaces.csproj", "{89FE8B70-82A0-4D6A-8DB9-76AD877940DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModel", "DomainModel\DomainModel.csproj", "{B7197DA9-0AD2-4FA7-B727-EC93A87F8624}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModel", "src\DomainModel\DomainModel.csproj", "{B7197DA9-0AD2-4FA7-B727-EC93A87F8624}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider.NextBus", "Provider.NextBus\Provider.NextBus.csproj", "{8CCF9772-BE7C-4AC1-8E84-03BBA9983072}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider.NextBus", "src\Provider.NextBus\Provider.NextBus.csproj", "{8CCF9772-BE7C-4AC1-8E84-03BBA9983072}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
