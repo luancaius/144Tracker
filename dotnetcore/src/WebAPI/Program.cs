@@ -17,7 +17,6 @@ namespace WebAPI
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://*:5000")
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
