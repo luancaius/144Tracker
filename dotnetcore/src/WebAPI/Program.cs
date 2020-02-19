@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace WebAPI
 {
@@ -21,6 +22,6 @@ namespace WebAPI
                 {
                     logging.ClearProviders();
                     logging.SetMinimumLevel(LogLevel.Trace);
-                });
+                }).UseNLog();
     }
 }
