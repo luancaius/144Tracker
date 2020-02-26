@@ -26,5 +26,11 @@ namespace Provider.NextBus.Mappers
             var vehicleDomain = new DomainModel.Vehicle(vehicle.Id, vehicle.Route, vehicle.Latitude, vehicle.Longitude, vehicle.SecondsSinceReport, distance);
             return vehicleDomain;
         }
+
+        public static DomainModel.Vehicle ConvertToDomain(this Vehicle vehicle)
+        {
+            var vehicleDomain = new DomainModel.Vehicle(vehicle.Id, vehicle.Route, vehicle.Latitude, vehicle.Longitude, vehicle.SecondsSinceReport, -1);
+            return vehicleDomain;
+        }
     }
 }

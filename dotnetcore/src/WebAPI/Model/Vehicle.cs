@@ -11,5 +11,10 @@ namespace WebAPI.Model
         public int SecondsSinceReport { get; set;}
         public string Distance { get; set;}
         public DateTime CreatedOn { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Route}|{Id}";
+        }
     }
 }

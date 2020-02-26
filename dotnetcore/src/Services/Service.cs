@@ -36,5 +36,11 @@ namespace Service
             var vehicles = await _rawService.GetScheduleDay(agency, route);
             return new BusScheduleDay();
         }
+
+        public async Task<Vehicle> GetVehicleById(string vehicleId, string agency, string route, double? lat, double? lon)
+        {
+            var vehicle = await _rawService.GetVehicle(agency, route, vehicleId);
+            return lat.HasValue ? vehicle.ConvertToDomain(lat.Value, lon.Value) : vehicle.ConvertToDomain();
+        }
     }
 }
